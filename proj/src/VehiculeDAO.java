@@ -1,15 +1,16 @@
-package com.onsr.accidents.dao;
+
+
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.onsr.accidents.business.Vehicule;
-
-public class VehiculeDao implements Serializable  {
+public class VehiculeDAO implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	Statement st ;
-	Connexion cnx = new Connexion();
+	Connection cnx = null ;
 	private int code;
 	public Vehicule getV() {
 		return v;
@@ -24,24 +25,40 @@ public class VehiculeDao implements Serializable  {
 	public void setCode(int code) {
 		this.code = code;
 	}
-public String insert() throws SQLException, ClassNotFoundException{
+	public Statement Connexion() 
+	{String unicode= "?useUnicode=yes&characterEncoding=UTF-8";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			 cnx=DriverManager.getConnection("jdbc:mysql://localhost:3306/accidents"+unicode,"root","");
+			 st = cnx.createStatement();
+		} catch (ClassNotFoundException e) {
+			e.getMessage();
+		} catch (SQLException e) {
+			e.getMessage();
+		}
+		return st ;
 		
-		//st=cnx.connexion() ;
-		String req = "insert into vehicule values ("+v.getNb_vehicule()+",'"+v.getGenre_vehicule()+"','"+v.getNationnalite()+
-				"','"+v.getProp_vehicule()+"','"+v.getProb_vehicule()+"','"+v.getScan_vehicule()+"')";
-		st.executeUpdate(req) ;
-		
-	
-   return null;}
+	}
+public String insert(){
+	String a="insert failed";
+		try {
+st=Connexion() ;
+System.out.println("connected");
+st.executeUpdate( "INSERT INTO vehicule VALUES ("+v.getNb_vehicule()+",'"+v.getGenre_vehicule()+"','"+v.getNationnalite()+"','"+v.getProp_vehicule()+"','"+v.getProb_vehicule()+"','"+v.getScan_vehicule()+"');");
+return a="insert yess";
+		} catch (SQLException e) {
+			e.getStackTrace();
+			   return a;
+		}
+	}
 	public String modif(){
 		String a=null;
 		try {
-			//st=cnx.connexion() ;
+			st=Connexion();
 		st.executeUpdate("update vehicule set nb_vehicule="+v.getNb_vehicule()+",genre_vehicule='"+v.getGenre_vehicule()+
 				"',nationnalite='"+v.getNationnalite()+"', prop_vehicule='"+v.getProp_vehicule()+"', prob_vehicule='"+
 				v.getProb_vehicule()+"', scan_vehicule='"+v.getScan_vehicule()+"' where id="+code);
 		a="modifier avec succces";
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -50,7 +67,7 @@ public String insert() throws SQLException, ClassNotFoundException{
 	public String supp(){
 		String a=null;
 		try {
-			//st=cnx.connexion() ;
+			st=Connexion();
 			if (this.recherche()!=0){
 			st.executeUpdate("delete from vehicule where id="+code);
 			System.out.print("Suppression avec succes");}
