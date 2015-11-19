@@ -30,7 +30,9 @@ public class VehiculeDAO implements Serializable  {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			 cnx=DriverManager.getConnection("jdbc:mysql://localhost:3306/accidents"+unicode,"root","");
+			 System.out.println("connected");
 			 st = cnx.createStatement();
+			 
 		} catch (ClassNotFoundException e) {
 			e.getMessage();
 		} catch (SQLException e) {
@@ -43,13 +45,11 @@ public String insert(){
 	String a="insert failed";
 		try {
 st=Connexion() ;
-System.out.println("connected");
 st.executeUpdate( "INSERT INTO vehicule VALUES ("+v.getNb_vehicule()+",'"+v.getGenre_vehicule()+"','"+v.getNationnalite()+"','"+v.getProp_vehicule()+"','"+v.getProb_vehicule()+"','"+v.getScan_vehicule()+"');");
 return a="insert yess";
 		} catch (SQLException e) {
 			e.getStackTrace();
-			   return a;
-		}
+			   return a;}
 	}
 	public String modif(){
 		String a=null;
@@ -60,8 +60,7 @@ return a="insert yess";
 				v.getProb_vehicule()+"', scan_vehicule='"+v.getScan_vehicule()+"' where id="+code);
 		a="modifier avec succces";
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			e.printStackTrace();}
 		return a;
 	}
 	public String supp(){
