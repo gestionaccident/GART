@@ -11,29 +11,23 @@ public class VehiculeDao implements Serializable  {
 	Statement st ;
 	Connexion cnx = new Connexion();
 	private int code;
-	public Vehicule getV() {
-		return v;
-	}
-	public void setV(Vehicule v) {
-		this.v = v;
-	}
-	Vehicule v=new Vehicule();
+	
 	public int getCode() {
 		return code;
 	}
 	public void setCode(int code) {
 		this.code = code;
 	}
-public String insert() throws SQLException, ClassNotFoundException{
+public String inserer(Vehicule v) throws SQLException, ClassNotFoundException{
 		
-		//st=cnx.connexion() ;
+		st=cnx.Connection() ;
 		String req = "insert into vehicule values ("+v.getNb_vehicule()+",'"+v.getGenre_vehicule()+"','"+v.getNationnalite()+
 				"','"+v.getProp_vehicule()+"','"+v.getProb_vehicule()+"','"+v.getScan_vehicule()+"')";
 		st.executeUpdate(req) ;
 		
 	
    return null;}
-	public String modif(){
+	public String modifier(Vehicule v){
 		String a=null;
 		try {
 			//st=cnx.connexion() ;
@@ -47,7 +41,7 @@ public String insert() throws SQLException, ClassNotFoundException{
 		}
 		return a;
 	}
-	public String supp(){
+	public String supprimer(Vehicule v){
 		String a=null;
 		try {
 			//st=cnx.connexion() ;

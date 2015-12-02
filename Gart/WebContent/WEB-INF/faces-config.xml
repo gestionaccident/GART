@@ -19,5 +19,10 @@
 		<managed-bean-class>com.onsr.accidents.managedbeans.Mbpart</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>mbVehicule</managed-bean-name>
+		<managed-bean-class>com.onsr.accidents.managedbeans.MbVehicule</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 </faces-config>
