@@ -11,20 +11,7 @@ public class VehiculeDAO implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	Statement st ;
 	Connection cnx = null ;
-	private int code;
-	public Vehicule getV() {
-		return v;
-	}
-	public void setV(Vehicule v) {
-		this.v = v;
-	}
-	Vehicule v=new Vehicule();
-	public int getCode() {
-		return code;
-	}
-	public void setCode(int code) {
-		this.code = code;
-	}
+	
 	public Statement Connexion() 
 	{String unicode= "?useUnicode=yes&characterEncoding=UTF-8";
 		try {
@@ -41,7 +28,7 @@ public class VehiculeDAO implements Serializable  {
 		return st ;
 		
 	}
-public String insert(){
+public String insert(Vehicule v){
 	String a="insert failed";
 		try {
 st=Connexion() ;
@@ -51,7 +38,7 @@ return a="insert yess";
 			e.getStackTrace();
 			   return a;}
 	}
-	public String modif(){
+	public String modif(Vehicule v,int code){
 		String a=null;
 		try {
 			st=Connexion();
@@ -63,11 +50,11 @@ return a="insert yess";
 			e.printStackTrace();}
 		return a;
 	}
-	public String supp(){
+	public String supp(int code){
 		String a=null;
 		try {
 			st=Connexion();
-			if (this.recherche()!=0){
+			if (this.recherche(code)!=0){
 			st.executeUpdate("delete from vehicule where id="+code);
 			System.out.print("Suppression avec succes");}
 			else
@@ -77,7 +64,7 @@ return a="insert yess";
 		}
 		return a;
 	}
-	public int recherche(){
+	public int recherche(int code){
 		int a=0;
 		try {
 			ResultSet rs=st.executeQuery("select * from vehicule where id="+code);
